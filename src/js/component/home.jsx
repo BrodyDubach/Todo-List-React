@@ -1,26 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  const [inputValue, setInputValue] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  const handleAddTodo = () => {
+    if (inputValue.trim() !== "") {
+      setTodos([...todos, inputValue]);
+      setInputValue("");
+    }
+  };
+
+  const handleDeleteTodo = (index) => {
+    setTodos(todos.filter((_, currentIndex) => index !== currentIndex));
+  };
+
+  return (
+    <div className="container">
+      <h1>My Todos</h1>
+      <ul>
+        <li>
+          <input
+            type="text"
+            onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleAddTodo();
+              }
+            }}
+            placeholder="Add Todo."
+          />
+        </li>
+        {todos.map((item, index) => (
+          <li key={index}>
+            {item}{" "}
+            <i
+              className="fas fa-trash-alt"
+              onClick={() => handleDeleteTodo(index)}
+            ></i>
+          </li>
+        ))}
+      </ul>
+      <div>{todos.length} Tasks</div>
+    </div>
+  );
 };
 
 export default Home;
