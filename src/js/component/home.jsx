@@ -29,7 +29,7 @@ const Home = () => {
                 handleAddTodo();
               }
             }}
-            placeholder="Add Todo."
+            placeholder="Add task."
           />
         </li>
         {todos.map((item, index) => (
